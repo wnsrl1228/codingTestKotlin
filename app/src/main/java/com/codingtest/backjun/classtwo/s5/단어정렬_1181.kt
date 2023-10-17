@@ -22,15 +22,11 @@ fun main() {
 }
 
 fun 단어정렬_개선되기전_코드() {
-    val n = readln().toInt()
-    val li = Array(n) {""}
-    repeat(n) {
-        li[it] = (readln())
-    }
-    val groupBy = li.groupBy { it.length }
+    val arr = Array(readln().toInt()) {readln()}
+    val group = arr.groupBy { it.length }
 
-    for (i in groupBy.keys.sorted()) {
-        val words = groupBy.get(i)!!.toSet()!!.sorted()
+    for (i in group.keys.sorted()) {
+        val words = group.get(i)!!.toSet()!!.sorted()
         for (j in words.indices) {
             println(words[j])
         }
