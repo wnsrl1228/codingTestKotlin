@@ -1,5 +1,6 @@
 package com.codingtest.backjun.classthree.g4
 
+
 fun main() = with(System.`in`.bufferedReader()) {
 
     val (N, M) = readLine().split(" ").map { it.toInt() }
@@ -122,18 +123,54 @@ object 테트로미노 {
         return count
     }
 }
-/**
- * 0 0
- *   0
- *   0
- *
- *  0 0 0
- *  0
- *
- *  0
- *  0
- *  0 0
- *
- *      0
- *  0 0 0
- */
+
+fun 테트로미노_개선된풀이() = with(System.`in`.bufferedReader()) {
+
+    val (N, M) = readLine().split(" ").map { it.toInt() }
+
+    val arr = Array(N) { readLine().split(" ").map { it.toInt() }}
+    val visited = Array(N){BooleanArray(M)}
+
+    val dx = intArrayOf(-1, 1, 0, 0)
+    val dy = intArrayOf(0, 0, -1, 1)
+    var max = 0
+    fun dfs(y: Int, x: Int, sum: Int, count: Int) {
+
+        if (count == 4) {
+            max = Math.max(max, sum)
+            return
+        }
+
+        for (i in 0..<4) {
+            val nextY = y + dy[i]
+            val nextX = x + dx[i]
+
+            if (nextY < 0 || nextX < 0 || nextX >= M || nextY >= N) {
+                continue
+            }
+
+            if (!visited[nextY][nextX]) {
+
+                if (count == 2) {
+                    visited[nextY][nextX] = true
+                    dfs(y, x, sum + arr[nextY][nextX], count + 1)
+                    visited[nextY][nextX] = false
+                }
+                visited[nextY][nextX] = true
+                dfs(nextY, nextX, sum + arr[nextY][nextX], count + 1)
+                visited[nextY][nextX] = false
+            }
+        }
+
+    }
+
+    for (i in 0..<N) {
+        for (j in 0..<M) {
+            visited[i][j] = true
+            dfs(i, j, arr[i][j], 1)
+            visited[i][j] = false
+        }
+    }
+    print(max)
+
+}
