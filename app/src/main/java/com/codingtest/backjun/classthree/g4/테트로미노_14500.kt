@@ -7,7 +7,7 @@ fun main() = with(System.`in`.bufferedReader()) {
 
     val arr = Array(N) { readLine().split(" ").map { it.toInt() }}
     테트로미노.arr = arr
-    // 1, 2, 4, 8, 8
+
     val tetris1 = arrayOf (
         /**
          * 0 0
@@ -31,11 +31,6 @@ fun main() = with(System.`in`.bufferedReader()) {
          * 0 0 0      0       0 0   0 0
          *                      0   0
          */
-        /**
-         *   0      0 0 0       0   0
-         * 0 0 0      0       0 0   0 0
-         *                      0   0
-         */
         Pair(arrayOf(0,1,-1), arrayOf(-1,0,0)),
         Pair(arrayOf(0,-1,1), arrayOf(1,0,0)),
         Pair(arrayOf(-1,0,0), arrayOf(0,-1,1)),
@@ -48,22 +43,10 @@ fun main() = with(System.`in`.bufferedReader()) {
          *   0 0                0
          *   x값 -로 바꾸면 반전
          */
-        /**
-         *   0     0 0 0      0 0         0
-         *   0     0            0     0 0 0
-         *   0 0                0
-         *   x값 -로 바꾸면 반전
-         */
         Pair(arrayOf(0,0,1), arrayOf(-1,-2,0)),
         Pair(arrayOf(0,1,2), arrayOf(-1,-1,-1)),
         Pair(arrayOf(1,1,1), arrayOf(0,1,2)),
         Pair(arrayOf(1,2,2), arrayOf(0,0,-1)),
-        /**
-         *   0       0 0      0         0 0
-         *   0 0   0 0        0 0     0 0
-         *     0                0
-         *   x값 -로 바꾸면 반전
-         */
         /**
          *   0       0 0      0         0 0
          *   0 0   0 0        0 0     0 0
