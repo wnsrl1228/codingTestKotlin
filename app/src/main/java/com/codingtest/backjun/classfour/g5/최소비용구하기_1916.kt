@@ -28,39 +28,42 @@ fun main() = StreamTokenizer(System.`in`.bufferedReader()).run {
         return nval.toInt()
     }
     val N = input()
-    val arr = Array(N+1) { IntArray(N+1) {Int.MAX_VALUE} } // 비용이 0인 경우도 있기에 무한으로 초기화
     val M = input()
+    val arr = Array(N+1) { IntArray(N+1) {Int.MAX_VALUE} } // 비용이 0인 경우도 있기에 MAX로 초기화
 
     repeat(M) {
         val start = input()
         val end = input()
         val cost = input()
-        if (arr[start][end] > cost) { // 동일한 버스노선인 경우 최소 비용 선택
+        // 동일한 버스노선인 경우 최소 비용을 선택
+        if (arr[start][end] > cost) {
             arr[start][end] = cost
         }
     }
 
-    val visited = BooleanArray(N+1)
-    val minCost = IntArray(N+1) {Int.MAX_VALUE}
+    val visited = BooleanArray(N+1)              // 도시 방문 여부
+    val minCost = IntArray(N+1) {Int.MAX_VALUE}  // 시작 지점에서 각 도시별 최단 비용
 
     val start = input()
     val end = input()
 
-    class Node(val number: Int, val edge: Int)
-    val queue = PriorityQueue<Node>(compareBy { it.edge })
-    queue.add(Node(start, 0))
+    class Node(val number: Int, val edge: Int)  // (도시, 비용)
 
+    val queue = PriorityQueue<Node>(compareBy { it.edge })  // 최소 비용 우선순위 큐
+    queue.add(Node(start, 0))
     minCost[start] = 0
+
     while (queue.isNotEmpty()) {
         val poll =queue.poll()
         val number = poll.number
 
         if (visited[number]) continue
         visited[number] = true
+
         for (i in 1..N) {
-            // 경로가 존재하는데
+            // i 도시까지 경로가 존재할 때
             if (arr[number][i] != Int.MAX_VALUE) {
-                // 기존 경로보다 적은 비용이 드는 경우
+                // 기존 비용보다 적은 비용이 드는 경우 업데이트
                 if (minCost[i] > arr[number][i] + minCost[number]) {
                     minCost[i] = arr[number][i] + minCost[number]
                     queue.add(Node(i, minCost[i]))
