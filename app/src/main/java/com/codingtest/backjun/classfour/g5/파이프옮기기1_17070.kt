@@ -32,6 +32,7 @@ fun main() = StreamTokenizer(System.`in`.bufferedReader()).run {
 
     dp[0][1][2] = 1
 
+    
     for (i in 1..N) {
         for (j in 3..N) {
             if (arr[i][j] == 1) continue
