@@ -25,17 +25,17 @@ fun main()= StreamTokenizer(System.`in`.bufferedReader()).run {
     val N = input() // 노드 개수
     val M = input() // 간선 개수
 
-    val arr = Array(N+1) { IntArray(N+1) { Int.MAX_VALUE} }
+    val arr = Array(N+1) { IntArray(N+1) { Int.MAX_VALUE} }  // 버스 비용은 0을 허용, 따라서 초기값은 무한으로 설정
     repeat(M) {
         val a = input()
         val b = input()
         val c = input()
-        arr[a][b] = Math.min(arr[a][b], c)
+        arr[a][b] = Math.min(arr[a][b], c)  // 동일한 노선에 여러 비용이 입력될 수 있다.
     }
-    for (i in 1..N) arr[i][i] = 0
+    for (i in 1..N) arr[i][i] = 0  // 자기 자신 도시 경로는 항상 0
 
-    val start = input()
-    val end = input()
+    val start = input()  // 시작 지점
+    val end = input()    // 도착 지점
 
     data class Node(val num: Int, var dist: Int)
     data class MinDist(var from: Int, var dist: Int) // 어떤 노드로부터 도달했지는, 최소거리
@@ -53,7 +53,7 @@ fun main()= StreamTokenizer(System.`in`.bufferedReader()).run {
         for (next in arr[num].indices) {
             if (arr[num][next] != Int.MAX_VALUE && minDist[next].dist > arr[num][next] + minDist[num].dist) {
                 minDist[next].dist = arr[num][next] + minDist[num].dist
-                minDist[next].from = num
+                minDist[next].from = num  // 기존 다익스트라에서 이 부분만 추가해주면 됨
                 queue.add(Node(next, minDist[next].dist))
             }
         }
@@ -66,6 +66,7 @@ fun main()= StreamTokenizer(System.`in`.bufferedReader()).run {
     var path = end
     pathArr.add(end)
 
+    // 도착 지점에서부터 시작지점까지 경로를 구한다.
     while (path != start) {
         path = minDist[path].from
         pathArr.addFirst(path)

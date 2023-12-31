@@ -27,22 +27,22 @@ fun main() = with(System.`in`.bufferedReader()){
             if (stack.isEmpty()) stack.add(Node(c, level))
             else {
                 // 스택에 우선순위가 더 높거나 같은 연산자가 있을 경우
-                if (stack.peek().level >= level) {
+
                     while (stack.isNotEmpty() && stack.peek().level >= level) {
                         sb.append(stack.pop().num)
                     }
-                }
+
                 stack.add(Node(c, level))
             }
         } else if (c == '*' || c == '/') {
             if (stack.isEmpty()) stack.add(Node(c, level+1))
             else {
                 // 스택에 우선순위가 더 높거나 같은 연산자가 있을 경우
-                if (stack.peek().level >= level+1) {
+
                     while (stack.isNotEmpty() && stack.peek().level >= level+1) {
                         sb.append(stack.pop().num)
                     }
-                }
+
                 stack.add(Node(c, level+1))
             }
         } else if (c == '(') {
