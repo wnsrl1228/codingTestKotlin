@@ -59,7 +59,7 @@ fun main() = StreamTokenizer(System.`in`.bufferedReader()).run {
         if (visited[cur.num]) continue
         visited[cur.num] = true
 
-        if (maxValue < cur.dist) maxValue = cur.dist
+        if (maxValue < cur.dist) maxValue = cur.dist  // 최대 간선 갱신
         result += cur.dist
 
         for (next in arr[cur.num]) {
