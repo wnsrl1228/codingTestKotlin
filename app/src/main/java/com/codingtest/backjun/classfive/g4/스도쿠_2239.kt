@@ -120,6 +120,8 @@ fun 스도쿠_비트개선() = with(System.`in`.bufferedReader()){
 
             // 열과 행과 칸 모두 존재하지 않는 숫자일 경우
             if (rows[pos.y] and bit == 0 && cols[pos.x] and bit == 0 && kans[(pos.y/3*3) + (pos.x/3)] and bit == 0) {
+
+                // 방문 처리
                 arr[pos.y][pos.x] = '0' + i
                 rows[pos.y] = rows[pos.y] or bit
                 cols[pos.x] = cols[pos.x] or bit
@@ -127,6 +129,7 @@ fun 스도쿠_비트개선() = with(System.`in`.bufferedReader()){
 
                 solve(index+1)
 
+                // 방문 처리 복구
                 rows[pos.y] = rows[pos.y] xor bit
                 cols[pos.x] = cols[pos.x] xor bit
                 kans[(pos.y/3*3) + (pos.x/3)] = kans[(pos.y/3*3) + (pos.x/3)] xor bit
@@ -156,21 +159,23 @@ fun 스도쿠_다른풀이() = with(System.`in`.bufferedReader()){
                 zeroPos.add(Pos(i,j))
             } else {
                 val num = arr[i][j]
-                rows[i][num] = true
-                cols[j][num] = true
-                kans[(i/3*3) + (j/3)][num] = true
+                rows[i][num] = true  // i열에 num 숫자 방문 처리
+                cols[j][num] = true  // j행에 num 숫자 방문 처리
+                kans[(i/3*3) + (j/3)][num] = true  // i,j에 해당되는 칸에 num 숫자 방문 처리
             }
         }
     }
 
     var check = false
     fun solve(index: Int) {
+
+        // 이미 스도쿠를 구했다면 바로 리턴
         if (check) return
+
+        // 스도쿠가 완성된 경우
         if (index == zeroPos.size) {
-            if (!check) {
-                check = true
-                arr.forEach { println(it.joinToString("")) }
-            }
+            check = true
+            arr.forEach { println(it.joinToString("")) }
             return
         }
 
@@ -178,8 +183,11 @@ fun 스도쿠_다른풀이() = with(System.`in`.bufferedReader()){
 
 
         for (num in 1..9) {
+
+            // 행, 열, 칸 셋 중 하나라도 존재하는 숫자인 경우 continue
             if (rows[pos.y][num] || cols[pos.x][num] || kans[(pos.y/3*3) + (pos.x/3)][num]) continue
 
+            // 방문 처리
             arr[pos.y][pos.x] = num
             rows[pos.y][num] = true
             cols[pos.x][num] = true
@@ -187,6 +195,7 @@ fun 스도쿠_다른풀이() = with(System.`in`.bufferedReader()){
 
             solve(index+1)
 
+            // 방문 처리 복구
             arr[pos.y][pos.x] = 0
             rows[pos.y][num] = false
             cols[pos.x][num] = false
