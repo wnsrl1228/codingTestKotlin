@@ -77,8 +77,8 @@ fun 팰린드롬_DP풀이() = StreamTokenizer(System.`in`.bufferedReader()).run{
              * 현재 문자에서 양 끝을 제거한 문자가 팰린드롬이고 -> dp[현재 글자수 -2][현재 문자의 next 문자]
              * 현재 문자랑 끝 문자가 같은 경우               -> arr[현재글자] == arr[현재글자 + 글자 개수]
              */
-            if (dp[i-2][j+1] && arr[j] == arr[j+i]) {
-                dp[i][j] = true
+            if (arr[j] == arr[j+i]) {
+                dp[i][j] = dp[i-2][j+1]
             }
         }
     }
