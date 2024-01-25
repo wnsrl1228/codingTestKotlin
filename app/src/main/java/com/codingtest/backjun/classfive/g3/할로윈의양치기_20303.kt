@@ -31,7 +31,7 @@ fun main() = StreamTokenizer(System.`in`.bufferedReader()).run {
         arr[b].add(a)
     }
 
-    // 친구끼리 그룹을 만들어줌 dfs
+    // 친구끼리 그룹을 만들어줌 bfs
     data class Group(val count: Int, val sum: Int)  // 인원수, 캔디 합
     val visited = BooleanArray(N+1)
     val group = arrayListOf<Group>()
